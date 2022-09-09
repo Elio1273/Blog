@@ -6,12 +6,16 @@ class User(AbstractUser):
     #手机号
     mobile=models.CharField(max_length=11 , unique=True , blank=False)
     #头像信息
-    avatar=models.ImageField(upload_to='avatar/ %y%m%d /' , blank=True)
+    avatar=models.ImageField(upload_to='avatar/%Y%m%d/' , blank=True)
     #简介信息
     user_desc=models.CharField(max_length=500 , blank=True)
 
     # 认证字段已经在User模型中的USERNAME_FIELD = 'mobile'修改
     USERNAME_FIELD = 'mobile'
+
+    #创建超级管理员必须输入的字段（不包括手机号和密码）
+    REQUIRED_FIELDS = ['username', 'email']
+
     class Meta:
         db_table='tb_users' #修改表名
         verbose_name='用户管理' #admin后台显示
