@@ -346,7 +346,7 @@ class UserCenterView(LoginRequiredMixin,View):
         return response
 
 
-
+#写博客视图
 from home.models import ArticleCategory,Article
 class WriteBlogView(LoginRequiredMixin,View):
 

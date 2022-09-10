@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 # Create your models here.
-
+#栏目类型 模型定义
 class ArticleCategory(models.Model):
     """
     文章分类
@@ -20,7 +20,7 @@ class ArticleCategory(models.Model):
         verbose_name = '类别管理' #admin站点显示
         verbose_name_plural = verbose_name
 
-
+#文章 模型定义
 from users.models import User
 class Article(models.Model):
     """
@@ -71,3 +71,28 @@ class Article(models.Model):
     def __str__(self):
         # 将文章标题返回
         return self.title
+
+
+#评论 模型定义
+class Comment(models.Model):
+    #评论内容
+    content=models.TextField()
+    #评论的文章
+    article=models.ForeignKey(Article,
+                              on_delete=models.SET_NULL,
+                              null=True)
+    #发表评论的用户
+    user=models.ForeignKey('users.User',
+                           on_delete=models.SET_NULL,
+                           null=True)
+    #评论发布时间
+    created=models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.article.title
+
+    class Meta:
+        db_table='tb_comment'
+        verbose_name = '评论管理'
+        verbose_name_plural = verbose_name
+
